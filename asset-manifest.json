@@ -1,0 +1,20 @@
+{
+  "files": {
+    "main.css": "/galaxy-rubin-game/static/css/main.2de01b5f.css",
+    "main.js": "/galaxy-rubin-game/static/js/main.9b12102e.js",
+    "static/media/bg_top.png": "/galaxy-rubin-game/static/media/bg_top.082803adc39ea8173cdf.png",
+    "static/media/measure_main.png": "/galaxy-rubin-game/static/media/measure_main.eaa374666b0485a49349.png",
+    "static/media/prize_glow.png": "/galaxy-rubin-game/static/media/prize_glow.b7e86bed727d13b83d3e.png",
+    "static/media/hammer.png": "/galaxy-rubin-game/static/media/hammer.7279e665506c7afc19ed.png",
+    "static/media/button.png": "/galaxy-rubin-game/static/media/button.39a7e5d9f7b92203ec5c.png",
+    "static/media/button_active.png": "/galaxy-rubin-game/static/media/button_active.531fef2a51e5263534e8.png",
+    "static/media/layer_glow.png": "/galaxy-rubin-game/static/media/layer_glow.08d02123dba070ddf711.png",
+    "index.html": "/galaxy-rubin-game/index.html",
+    "main.2de01b5f.css.map": "/galaxy-rubin-game/static/css/main.2de01b5f.css.map",
+    "main.9b12102e.js.map": "/galaxy-rubin-game/static/js/main.9b12102e.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.2de01b5f.css",
+    "static/js/main.9b12102e.js"
+  ]
+}
