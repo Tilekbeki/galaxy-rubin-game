@@ -12,13 +12,10 @@ const dispatch = useDispatch();
     
     
 useEffect(() => {
-    // Логируем заполнение уровней
     const filledCount = levels.filter(level => level.isHit).length;
     
     if (filledCount > 0) {
-        console.log(`📊 Заполнено уровней: ${filledCount}/7`);
         
-        // Задержка в 2 секунды перед обновлением состояния робота
         const timeoutId = setTimeout(() => {
             if (filledCount === 7) {
                 dispatch(setRobotState("win"));
@@ -27,31 +24,13 @@ useEffect(() => {
                 dispatch(setRobotState("punched"));
                 dispatch(failGame());
             }
-        }, 1000); // 2 секунды задержки
+        }, 1000); 
         
-        levels.forEach((level, index) => {
-            if (level.isHit) {
-                console.log(`  ✅ Уровень ${7-index}: заполнен (цвет: ${getLevelColor(level.id)})`);
-            }
-        });
-        
-        // Очищаем таймер при размонтировании или повторном вызове эффекта
         return () => clearTimeout(timeoutId);
     }
-}, [levels]);
+}, [levels, dispatch]);
     
-    const getLevelColor = (id) => {
-        const colors = {
-            1: 'темно-зеленый',
-            2: 'зеленый',
-            3: 'светло-зеленый',
-            4: 'желтый',
-            5: 'оранжевый',
-            6: 'светло-красный',
-            7: 'красный'
-        };
-        return colors[id] || 'неизвестно';
-    };
+
     
     return (
         <div className={styles['measure-levels']}>

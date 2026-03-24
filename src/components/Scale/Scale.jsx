@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { useEffect, useState, useRef } from 'react';
-import { fillLevelsByValue, resetLevels } from '../../store/slices/measureSlice';
+import { fillLevelsByValue } from '../../store/slices/measureSlice';
 import { setScaleValue } from '../../store/slices/scaleSlice';
 
 import styles from './Scale.module.css';
@@ -9,20 +9,22 @@ const Scale = () => {
     const dispatch = useDispatch();
     const maxHeight = 139;
 
-    // Redux
-    const gameStatus = useSelector(state => state.game.gameStatus); // before, ingame, win, fail
-    const hammerState = useSelector(state => state.game.hammerState); // initial, ingame, punched
+    const gameStatus = useSelector(state => state.game.gameStatus);
+    const hammerState = useSelector(state => state.game.hammerState);
 
     const [height, setHeight] = useState(0);
+
     const directionRef = useRef(1);
     const intervalRef = useRef(null);
+    const timeoutRef = useRef(null);
+    const isHandledRef = useRef(false); 
 
-    // ===== Движение шкалы =====
     useEffect(() => {
+        clearInterval(intervalRef.current);
+
         if (gameStatus === 'before') {
             setHeight(0);
             directionRef.current = 1;
-            clearInterval(intervalRef.current);
             return;
         }
 
@@ -41,37 +43,37 @@ const Scale = () => {
 
                     return next;
                 });
-            }, 200);
+            }, 100);
         }
 
-        return () => clearInterval(intervalRef.current);
+        return () => {
+            clearInterval(intervalRef.current);
+        };
     }, [gameStatus, hammerState]);
 
-    // ===== Удар =====
-useEffect(() => {
-    if (hammerState === 'punched') {
-        // создаём таймер на 2 секунды
-        const timer = setTimeout(() => {
+    useEffect(() => {
+        if (hammerState !== 'punched') {
+            isHandledRef.current = false;
+            return;
+        }
+
+        if (isHandledRef.current) return;
+
+        isHandledRef.current = true;
+
+        timeoutRef.current = setTimeout(() => {
             const percent = Math.round((height / maxHeight) * 100);
 
-            // сохраняем процент
-            dispatch(setScaleValue(height));
-            dispatch(fillLevelsByValue(height));
-        }, 1000); // задержка 2000мс = 2 сек
+            dispatch(setScaleValue(percent));
+            dispatch(fillLevelsByValue(percent));
+        }, 1000);
 
-        // очистка таймера при размонтировании или изменении зависимостей
-        return () => clearTimeout(timer);
-    }
-}, [hammerState, height, dispatch]);
+        return () => {
+            clearTimeout(timeoutRef.current);
+        };
+    }, [hammerState, dispatch,height]); 
 
-    // ===== Градиент шкалы =====
-    const getGradient = () => {
-        const percent = (height / maxHeight) * 100;
-        return 'linear-gradient(180deg, #00d355 0%, #88ff88 100%)';
-    };
-
-    // ===== Вычисляем bottom для псевдоэлемента =====
-    const afterBottom = -1 + height; // смещение белой полоски вверх вместе с высотой
+    const afterBottom = -1 + height;
 
     return (
         <div className={styles.scale}>
@@ -81,9 +83,9 @@ useEffect(() => {
                 className={styles['scale-energy']}
                 style={{
                     height: `${height}px`,
-                    background: getGradient(),
+                    background: 'linear-gradient(180deg, #00d355 0%, #88ff88 100%)',
                     transition: 'height 0.05s linear',
-                    '--after-bottom': `${afterBottom}px` // передаем в CSS переменную
+                    '--after-bottom': `${afterBottom}px`
                 }}
             />
 

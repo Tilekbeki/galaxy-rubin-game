@@ -2,9 +2,7 @@ import styles from './Robot.module.css';
 import { useSelector } from 'react-redux';
 
 const Robot = () => {
-    // Берём состояние робота из Redux
     const robotState = useSelector(state => state.game.robotState); 
-    // robotState может быть: 'before', 'ingame', 'punched', 'win'
 
     const getRobotClass = () => {
         switch(robotState) {

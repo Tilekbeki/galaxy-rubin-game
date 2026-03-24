@@ -2,16 +2,16 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   levels: [
-    { id: 7, isHit: false, height: 16 }, // верхний - красный
-    { id: 6, isHit: false, height: 23 }, // светло-красный
-    { id: 5, isHit: false, height: 28 }, // оранжевый
-    { id: 4, isHit: false, height: 33 }, // желтый
-    { id: 3, isHit: false, height: 38 }, // светло-зеленый
-    { id: 2, isHit: false, height: 43 }, // зеленый
-    { id: 1, isHit: false, height: 48 }, // нижний - темно-зеленый
+    { id: 7, isHit: false, height: 16 },
+    { id: 6, isHit: false, height: 23 },
+    { id: 5, isHit: false, height: 28 },
+    { id: 4, isHit: false, height: 33 },
+    { id: 3, isHit: false, height: 38 },
+    { id: 2, isHit: false, height: 43 },
+    { id: 1, isHit: false, height: 48 },
   ],
   totalLevels: 7,
-  filledLevels: 0, // теперь считаем сколько уровней заполнено
+  filledLevels: 0,
 };
 
 const measureSlice = createSlice({
@@ -19,20 +19,23 @@ const measureSlice = createSlice({
   initialState,
   reducers: {
     fillLevelsByValue: (state, action) => {
-      const value = action.payload; // 0-100%
-      const levelsToFill = Math.floor((value / 100) * state.totalLevels);
+      const value = action.payload;
+
+      const levelsToFill =
+        value >= 90
+          ? state.totalLevels
+          : Math.round((value / 100) * state.totalLevels);
 
       state.levels = state.levels.map((level, index) => ({
         ...level,
         isHit: index >= state.totalLevels - levelsToFill,
       }));
 
-      // 🟢 обновляем filledLevels
-      state.filledLevels = state.levels.filter((l) => l.isHit).length;
+      state.filledLevels = levelsToFill;
     },
     resetLevels: (state) => {
       state.levels = state.levels.map((level) => ({ ...level, isHit: false }));
-      state.filledLevels = 0; // сбрасываем счетчик
+      state.filledLevels = 0;
     },
     setLevelHit: (state, action) => {
       const { levelId, isHit } = action.payload;
@@ -41,7 +44,6 @@ const measureSlice = createSlice({
         level.isHit = isHit;
       }
 
-      // 🟢 пересчитываем filledLevels
       state.filledLevels = state.levels.filter((l) => l.isHit).length;
     },
   },

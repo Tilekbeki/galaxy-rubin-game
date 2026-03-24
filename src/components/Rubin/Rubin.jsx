@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import styles from './Rubin.module.css';
 
 const Rubin = ({ isWin = false }) => {

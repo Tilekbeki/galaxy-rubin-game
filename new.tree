@@ -1,5 +1,5 @@
 ├── .gitignore
-├── .tree
+├── new.tree
 ├── package-lock.json
 ├── package.json
 ├── public
@@ -66,4 +66,10 @@
   │    ├── TextPreview.jsx
   │    └── TextPreview.module.css
   ├── index.css
-  └── index.js
+  ├── index.js
+  └── store
+    ├── index.js
+    └── slices
+      ├── gameSlice.js
+      ├── measureSlice.js
+      └── scaleSlice.js
