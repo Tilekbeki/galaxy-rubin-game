@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import GameScene from "../GameScene/";
@@ -11,65 +11,38 @@ import {
   resetGame,
 } from "../../store/slices/gameSlice";
 
-import {
-  startScaleMovement,
-  stopScaleMovement,
-  updateScaleValue,
-  resetScale,
-} from "../../store/slices/scaleSlice";
-
+import { resetScale } from "../../store/slices/scaleSlice";
 import { fillLevelsByValue, resetLevels } from "../../store/slices/measureSlice";
 
 const GameContainer = () => {
   const dispatch = useDispatch();
-  const animationRef = useRef(null);
 
-  const {
-    gameStatus,
-    hammerState,
-    canPunch,
-    showResult,
-    punchResult,
-    robotState,
-  } = useSelector((state) => state.game);
+  const currentValue = useSelector((state) => state.scale.currentValue);
 
-  // ===== АНИМАЦИЯ =====
+  const { gameStatus, robotState, hammerState } = useSelector(
+    (state) => state.game
+  );
+
   useEffect(() => {
-    if (gameStatus === "ingame") {
-      const animate = () => {
-        dispatch(updateScaleValue());
-        animationRef.current = requestAnimationFrame(animate);
-      };
-      animate();
-    }
+    if (hammerState !== "punched") return;
 
-    return () => cancelAnimationFrame(animationRef.current);
-  }, [gameStatus, dispatch]);
+    dispatch(fillLevelsByValue(currentValue));
 
-  // ===== РЕЗУЛЬТАТ =====
-  useEffect(() => {
-    if (showResult && punchResult !== null) {
-      dispatch(fillLevelsByValue(punchResult));
+    const timer = setTimeout(() => {
+      dispatch(currentValue >= 95 ? winGame() : failGame());
+    }, 1000);
 
-      const timer = setTimeout(() => {
-        dispatch(punchResult >= 90 ? winGame() : failGame());
-        dispatch(stopScaleMovement());
-      }, 500);
+    return () => clearTimeout(timer);
+  }, [hammerState, currentValue, dispatch]);
 
-      return () => clearTimeout(timer);
-    }
-  }, [showResult, punchResult, dispatch]);
-
-  // ===== ACTION HANDLER =====
   const handleAction = () => {
     if (gameStatus === "before") {
       dispatch(startGame());
-      dispatch(startScaleMovement());
       dispatch(resetLevels());
       dispatch(resetScale());
     }
 
-    if (gameStatus === "ingame" && canPunch) {
+    if (gameStatus === "ingame") {
       dispatch(punch());
     }
 
@@ -90,7 +63,6 @@ const GameContainer = () => {
   return (
     <GameScene
       gameStatus={gameStatus}
-      hammerState={hammerState}
       robotState={robotState}
       buttonText={buttonTextMap[gameStatus]}
       onAction={handleAction}

@@ -21,6 +21,7 @@ useEffect(() => {
                 dispatch(setRobotState("win"));
                 dispatch(winGame());
             } else {
+                console.log('сработал таймер')
                 dispatch(setRobotState("punched"));
                 dispatch(failGame());
             }

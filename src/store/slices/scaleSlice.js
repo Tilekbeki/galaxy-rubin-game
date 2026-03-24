@@ -14,23 +14,11 @@ const scaleSlice = createSlice({
     setMove: (state) => {
       state.isMoving = true;
     },
-    updateScaleValue: (state) => {
-      if (state.direction === "up") {
-        state.currentValue += state.speed;
-        if (state.currentValue >= 100) {
-          state.currentValue = 100;
-        }
-      } else {
-        state.currentValue -= state.speed;
-        if (state.currentValue <= 0) {
-          state.currentValue = 0;
-        }
-      }
+    updateScaleValue: (state, action) => {
+      state.currentValue = Math.min(100, Math.max(0, action.payload));
     },
     setScaleValue: (state, action) => {
-      const value = Math.round(action.payload);
-
-      state.currentValue = Math.min(100, Math.max(0, value));
+      state.currentValue = action.payload;
     },
     setScaleSpeed: (state, action) => {
       state.speed = action.payload;

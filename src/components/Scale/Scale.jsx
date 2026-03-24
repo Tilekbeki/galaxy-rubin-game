@@ -29,20 +29,22 @@ const Scale = () => {
         }
 
         if (hammerState === 'ingame') {
-            intervalRef.current = setInterval(() => {
-                setHeight(prev => {
-                    let next = prev + directionRef.current * 5;
+            const step = Math.max(1, Math.floor(maxHeight / 20));
 
-                    if (next >= maxHeight) {
-                        next = maxHeight;
-                        directionRef.current = -1;
-                    } else if (next <= 0) {
-                        next = 0;
-                        directionRef.current = 1;
-                    }
+intervalRef.current = setInterval(() => {
+    setHeight(prev => {
+        let next = prev + directionRef.current * step;
 
-                    return next;
-                });
+        if (next >= maxHeight) {
+            next = maxHeight;
+            directionRef.current = -1;
+        } else if (next <= 0) {
+            next = 0;
+            directionRef.current = 1;
+        }
+
+        return next;
+    });
             }, 100);
         }
 

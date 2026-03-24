@@ -22,7 +22,7 @@ const measureSlice = createSlice({
       const value = action.payload;
 
       const levelsToFill =
-        value >= 90
+        value >= 95
           ? state.totalLevels
           : Math.round((value / 100) * state.totalLevels);
 

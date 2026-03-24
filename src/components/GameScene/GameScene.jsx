@@ -10,7 +10,6 @@ import Hammer from "../Hammer";
 
 const GameScene = ({
   gameStatus,
-  hammerState,
   robotState,
   buttonText,
   onAction,
@@ -21,7 +20,7 @@ const GameScene = ({
     <div className={styles.container}>
       <MeasureBar isWin={gameStatus === "win"} />
       <PushButton onPunch={onAction} />
-      <Hammer state={hammerState} />
+      <Hammer  />
 
       <div className={styles.controllers}>
         <Scale />

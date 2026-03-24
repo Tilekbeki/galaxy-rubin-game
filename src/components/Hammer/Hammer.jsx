@@ -1,9 +1,13 @@
 import styles from './Hammer.module.css';
+import { useSelector } from 'react-redux';
 
-const Hammer = ({ state = 'initial' }) => {
+const Hammer = () => {
+      const { hammerState} = useSelector((state) => state.game);
+
     const getHammerClass = () => {
-        switch(state) {
-            case 'in-game':
+
+        switch(hammerState) {
+            case 'ingame':
                 return `${styles.hammer} ${styles['hammer--in-game']}`;
             case 'punched':
                 return `${styles.hammer} ${styles['hammer--punched']}`;
