@@ -1,0 +1,179 @@
+.measure-levels {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  align-items: center;
+  position: absolute;
+  left: 49%;
+  transform: translate(-50%);
+  top: 77px;
+  width: 74px;
+}
+
+/* Контейнер для каждого уровня */
+.level-item {
+  position: relative;
+  width: 74px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+/* Базовые стили для прямоугольников */
+.level {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: background 0.3s ease;
+}
+
+/* Индивидуальная высота для каждого уровня */
+.level-item--1 {
+  height: 48px;
+}
+
+.level-item--2 {
+  height: 43px;
+}
+
+.level-item--3 {
+  height: 38px;
+}
+
+.level-item--4 {
+  height: 33px;
+}
+
+.level-item--5 {
+  height: 28px;
+}
+
+.level-item--6 {
+  height: 23px;
+}
+
+.level-item--7 {
+  height: 16px;
+}
+
+/* Псевдоэлементы для рамки */
+.level::before,
+.level::after {
+  content: "";
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.3);
+  pointer-events: none;
+}
+
+/* Верхний левый угол */
+.level::before {
+  top: 0;
+  left: 0;
+}
+
+/* Нижний правый угол */
+.level::after {
+  width: 3px;
+  right: 2px;
+  top: 50%;
+  transform: translateY(-50%);
+  height: calc(100% - 4px);
+}
+
+/* ===== Обычные состояния (от темного к светлому) ===== */
+/* Самый нижний (1-й) - самый темный */
+.level--1 {
+  background: #254b9d;
+}
+
+/* 2-й */
+.level--2 {
+  background: #3a5ca5;
+}
+
+/* 3-й */
+.level--3 {
+  background: #5878be;
+}
+
+/* 4-й */
+.level--4 {
+  background: #7593d6;
+}
+
+/* 5-й */
+.level--5 {
+  background: #94aadc;
+}
+
+/* 6-й */
+.level--6 {
+  background: #b7c8ed;
+}
+
+/* Самый верхний (7-й) - самый светлый */
+.level--7 {
+  background: #d1defb;
+  border: unset;
+  border-radius: 4px 4px 0 0;
+}
+
+/* ===== Состояния при ударе (заполнение) ===== */
+/* Нижний - зеленый */
+.level--1.hit {
+  background: #00b047;
+}
+
+/* 2-й - зеленый светлее */
+.level--2.hit {
+  background: #00d355;
+}
+
+/* 3-й - салатовый */
+.level--3.hit {
+  background: #91e508;
+}
+
+/* 4-й - желтый */
+.level--4.hit {
+  background: #ffdf35;
+}
+
+/* 5-й - оранжевый */
+.level--5.hit {
+  background: #ffae4e;
+}
+
+/* 6-й - светло-красный */
+.level--6.hit {
+  background: #ff784e;
+}
+
+/* Верхний - красный */
+.level--7.hit {
+  background: #f65a5a;
+}
+
+/* Анимация заполнения снизу-вверх */
+.level {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Псевдоэлемент для анимации заполнения */
+.level::before {
+  content: "";
+  position: absolute;
+  left: 1px;
+  top: 2px;
+  width: calc(100% - 3px);
+  height: 3px;
+  z-index: 1;
+}
+
+/* Убедимся, что псевдоэлементы рамки остаются поверх анимации */
+.level::after,
+.level .level__corner {
+  z-index: 2;
+}

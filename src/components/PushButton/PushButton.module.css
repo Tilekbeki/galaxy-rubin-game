@@ -1,0 +1,10 @@
+.push-button {
+  position: absolute;
+  top: 422px;
+  left: 50%;
+  transform: translate(-50%);
+  width: 124px;
+  z-index: 1;
+  height: 68px;
+  background: url("../../assets/button.png") center/cover no-repeat;
+}

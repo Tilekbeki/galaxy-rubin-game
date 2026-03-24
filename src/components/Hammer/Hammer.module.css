@@ -1,0 +1,39 @@
+.hammer {
+  position: absolute;
+  right: 62px;
+  top: 391.82px;
+  width: 101px;
+  height: 110px;
+  background: url("../../assets/hammer.png") center / cover no-repeat;
+  transform: rotate(-43.16deg);
+  z-index: 10;
+  transition: all 0.3s ease;
+}
+
+.hammer--in-game {
+  right: 46.4px;
+  top: 357px;
+  transform: rotate(-43.16deg);
+}
+
+.hammer--punched {
+  animation: punch-animation 1s ease-in forwards;
+}
+
+@keyframes punch-animation {
+  0% {
+    transform: rotate(-90.16deg);
+    right: 46.4px;
+    top: 357px;
+  }
+  50% {
+    transform: rotate(-43.16deg);
+    right: 46.4px;
+    top: 300px;
+  }
+  100% {
+    transform: rotate(-89.82deg);
+    right: 107px;
+    top: 369.82px;
+  }
+}

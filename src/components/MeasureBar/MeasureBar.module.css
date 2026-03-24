@@ -1,0 +1,36 @@
+.measure-bar {
+  position: absolute;
+  width: 170px;
+  height: 324px;
+  background: url("../../assets/measure_main.png") center / cover no-repeat;
+  top: 92px;
+  left: 50%;
+  transform: translateX(-50%);
+
+  padding-top: 23px;
+}
+
+.measure-bar-header {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  left: 50%;
+  transform: translateX(-52%);
+  align-items: center;
+  width: 73px;
+  height: 47px;
+  background-image: linear-gradient(
+    180deg,
+    rgba(182, 118, 203, 1) 0%,
+    rgba(8, 11, 58, 1) 100%
+  );
+  border-radius: 4px;
+}
+
+.measure-bar-header--win {
+  background-image: linear-gradient(
+    180deg,
+    rgba(255, 148, 148, 1) 0%,
+    rgba(255, 1, 1, 1) 100%
+  );
+}

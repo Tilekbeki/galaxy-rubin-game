@@ -1,0 +1,70 @@
+.prize {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.rubin {
+  width: 68px;
+  height: 68px;
+  background: url("../../assets/rubin.png") center/cover no-repeat;
+  position: relative;
+  z-index: 2;
+}
+
+/* Общие стили для слоев свечения */
+.glowLayer1,
+.glowLayer2 {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100px;
+  height: 100px;
+  background: center/contain no-repeat;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.glowLayer1 {
+  background-image: url("../../assets/prize_glow.png");
+}
+
+.glowLayer2 {
+  background-image: url("../../assets/layer_glow.png");
+}
+
+/* Состояние победы */
+.prize.win .glowLayer1,
+.prize.win .glowLayer2 {
+  opacity: 1;
+}
+
+.prize.win .glowLayer1 {
+  animation: rotateClockwise 4s linear infinite;
+}
+
+.prize.win .glowLayer2 {
+  animation: rotateCounterClockwise 3s linear infinite;
+}
+
+@keyframes rotateClockwise {
+  from {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+@keyframes rotateCounterClockwise {
+  from {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  to {
+    transform: translate(-50%, -50%) rotate(-360deg);
+  }
+}

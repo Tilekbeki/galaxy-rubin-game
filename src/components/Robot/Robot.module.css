@@ -1,0 +1,53 @@
+.robot-place {
+  position: relative;
+  width: 70px;
+  height: 86.44px;
+}
+
+.robot {
+  position: absolute;
+  top: 2px;
+  width: inherit;
+  height: inherit;
+  background: center/cover no-repeat;
+  transition: background-image 0.3s ease;
+}
+
+/* Состояния робота */
+.robot-before {
+  background-image: url("../../assets/robot_1.png");
+}
+
+.robot-ingame {
+  background-image: url("../../assets/robot_1.png");
+}
+
+.robot-punched {
+  background-image: url("../../assets/robot_2.png");
+}
+
+.robot-win {
+  background-image: url("../../assets/robot_3.png");
+  animation: shake 0.5s ease-in-out infinite;
+}
+
+@keyframes shake {
+  0% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  20% {
+    transform: translate(-2px, 0) rotate(-2deg);
+  }
+  40% {
+    transform: translate(2px, 0) rotate(2deg);
+  }
+  60% {
+    transform: translate(-1px, 0) rotate(-1deg);
+  }
+  80% {
+    transform: translate(1px, 0) rotate(1deg);
+  }
+  100% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+}

@@ -1,38 +1,46 @@
 .App {
   text-align: center;
+  position: relative;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.App-container {
+  position: relative;
+  width: 360px;
+  height: 640px;
+  margin: 0 auto;
+  background-image: url("../src/assets/bg_top.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center 80%; /* 80% от верха, можно подобрать */
+  /* или сместить на определенное количество пикселей */
+  background-position: center 80px; /* 50px от верха */
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.controllers {
+  display: flex;
+  position: absolute;
+  align-items: flex-end;
+  bottom: 28px;
+  right: 13px;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.App-interactive-block {
+  margin-right: 11px;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  gap: 13px;
+  width: 172px;
 }
 
-.App-link {
-  color: #61dafb;
+.App-interactive-block--win {
+  display: none;
+  gap: 1px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.App-interactive-block {
+  text-align: center;
+}
+
+.App-interactive-block--hidden {
+  visibility: hidden;
 }

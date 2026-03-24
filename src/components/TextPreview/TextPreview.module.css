@@ -1,0 +1,10 @@
+.text-preview {
+  margin: 0 auto;
+  font-weight: 700;
+  font-size: 13px;
+  color: white;
+}
+
+.text-preview span {
+  color: #ff4646;
+}
