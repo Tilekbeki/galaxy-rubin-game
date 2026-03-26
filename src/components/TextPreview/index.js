@@ -1,3 +1,3 @@
-import TextPreview from "./TextPreview";
+import TextPreview from './TextPreview';
 
 export default TextPreview;

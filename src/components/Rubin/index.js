@@ -1,3 +1,3 @@
-import Rubin from "./Rubin";
+import Rubin from './Rubin';
 
 export default Rubin;

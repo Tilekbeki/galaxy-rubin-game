@@ -1,11 +1,11 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   currentValue: 0,
 };
 
 const scaleSlice = createSlice({
-  name: "scale",
+  name: 'scale',
   initialState,
   reducers: {
     startScaleMovement: (state) => {

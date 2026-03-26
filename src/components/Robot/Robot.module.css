@@ -15,19 +15,19 @@
 
 /* Состояния робота */
 .robot-before {
-  background-image: url("../../assets/robot_1.png");
+  background-image: url('../../assets/robot_1.png');
 }
 
 .robot-ingame {
-  background-image: url("../../assets/robot_1.png");
+  background-image: url('../../assets/robot_1.png');
 }
 
 .robot-punched {
-  background-image: url("../../assets/robot_2.png");
+  background-image: url('../../assets/robot_2.png');
 }
 
 .robot-win {
-  background-image: url("../../assets/robot_3.png");
+  background-image: url('../../assets/robot_3.png');
   animation: shake 0.5s ease-in-out infinite;
 }
 

@@ -6,7 +6,7 @@
   position: absolute;
   left: 49%;
   transform: translate(-50%);
-  top: 77px;
+  bottom: 4px;
   width: 74px;
 }
 
@@ -28,27 +28,27 @@
 
 /* Индивидуальная высота для каждого уровня */
 .level-item--1 {
-  height: 48px;
+  height: 46px;
 }
 
 .level-item--2 {
-  height: 43px;
+  height: 41px;
 }
 
 .level-item--3 {
-  height: 38px;
+  height: 36px;
 }
 
 .level-item--4 {
-  height: 33px;
+  height: 31px;
 }
 
 .level-item--5 {
-  height: 28px;
+  height: 26px;
 }
 
 .level-item--6 {
-  height: 23px;
+  height: 21px;
 }
 
 .level-item--7 {
@@ -58,7 +58,7 @@
 /* Псевдоэлементы для рамки */
 .level::before,
 .level::after {
-  content: "";
+  content: '';
   position: absolute;
   width: 8px;
   height: 8px;
@@ -163,7 +163,7 @@
 
 /* Псевдоэлемент для анимации заполнения */
 .level::before {
-  content: "";
+  content: '';
   position: absolute;
   left: 1px;
   top: 2px;

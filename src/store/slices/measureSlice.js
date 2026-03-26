@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   levels: [
@@ -8,23 +8,21 @@ const initialState = {
     { id: 4, isHit: false, height: 33 },
     { id: 3, isHit: false, height: 38 },
     { id: 2, isHit: false, height: 43 },
-    { id: 1, isHit: false, height: 48 },
+    { id: 1, isHit: false, height: 50 },
   ],
   totalLevels: 7,
   filledLevels: 0,
 };
 
 const measureSlice = createSlice({
-  name: "measure",
+  name: 'measure',
   initialState,
   reducers: {
     fillLevelsByValue: (state, action) => {
       const value = action.payload;
 
       const levelsToFill =
-        value >= 95
-          ? state.totalLevels
-          : Math.round((value / 100) * state.totalLevels);
+        value >= 95 ? state.totalLevels : Math.round((value / 100) * state.totalLevels);
 
       state.levels = state.levels.map((level, index) => ({
         ...level,
@@ -49,6 +47,5 @@ const measureSlice = createSlice({
   },
 });
 
-export const { fillLevelsByValue, resetLevels, setLevelHit } =
-  measureSlice.actions;
+export const { fillLevelsByValue, resetLevels, setLevelHit } = measureSlice.actions;
 export default measureSlice.reducer;

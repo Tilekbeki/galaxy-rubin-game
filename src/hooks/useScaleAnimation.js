@@ -1,59 +1,44 @@
-import { useSelector, useDispatch } from 'react-redux';
-import { useEffect, useRef } from 'react';
+import { useRef, useEffect } from 'react';
 
-import { fillLevelsByValue } from '../../store/slices/measureSlice';
-import { setScaleValue } from '../../store/slices/scaleSlice';
+import { HAMMER_STATE } from '../constants/gameStatus';
 
-import styles from './Scale.module.css';
-
-const Scale = () => {
-  const dispatch = useDispatch();
-  const maxHeight = 139;
-
-  const gameStatus = useSelector((state) => state.game.gameStatus);
-  const hammerState = useSelector((state) => state.game.hammerState);
-
+export const useScaleAnimation = (hammerState, maxHeight = 139) => {
   const energyRef = useRef(null);
   const directionRef = useRef(1);
   const frameRef = useRef(null);
-  const resetFrameRef = useRef(null);
   const velocityRef = useRef(1.5);
   const currentHeightRef = useRef(0);
-  const isHandledRef = useRef(false);
-  const timeoutRef = useRef(null);
   const isResettingRef = useRef(false);
+  const resetFrameRef = useRef(null);
 
   // Функция для плавного сброса
   const smoothReset = () => {
     if (resetFrameRef.current) {
       cancelAnimationFrame(resetFrameRef.current);
     }
-    
+
     isResettingRef.current = true;
     const startHeight = currentHeightRef.current;
     const startTime = performance.now();
-    const duration = 500; // 500ms анимация
-    
+    const duration = 500;
+
     const animateReset = (now) => {
       const elapsed = now - startTime;
       const progress = Math.min(1, elapsed / duration);
-      
-      // Плавная функция easing
-      const easeOutCubic = 1 - (1 - progress)**3;
+      const easeOutCubic = 1 - (1 - progress) ** 3;
       const currentHeight = startHeight * (1 - easeOutCubic);
-      
+
       currentHeightRef.current = currentHeight;
-      
+
       if (energyRef.current) {
         energyRef.current.style.height = `${currentHeight}px`;
         const afterBottom = -1 + currentHeight;
         energyRef.current.style.setProperty('--after-bottom', `${afterBottom}px`);
       }
-      
+
       if (progress < 1) {
         resetFrameRef.current = requestAnimationFrame(animateReset);
       } else {
-        // Анимация завершена
         currentHeightRef.current = 0;
         if (energyRef.current) {
           energyRef.current.style.height = `0px`;
@@ -63,32 +48,13 @@ const Scale = () => {
         resetFrameRef.current = null;
       }
     };
-    
+
     resetFrameRef.current = requestAnimationFrame(animateReset);
   };
 
-  // Сброс значений при gameStatus === 'before'
-  useEffect(() => {
-    if (gameStatus === 'before') {
-      // Плавно сбрасываем высоту
-      smoothReset();
-      
-      // Сбрасываем остальные параметры
-      directionRef.current = 1;
-      velocityRef.current = 1.5;
-      
-      // Сбрасываем флаги и таймеры
-      isHandledRef.current = false;
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current);
-        timeoutRef.current = null;
-      }
-    }
-  }, [gameStatus]);
-
   // Анимация через requestAnimationFrame
   useEffect(() => {
-    if (hammerState !== 'ingame') {
+    if (hammerState !== HAMMER_STATE.INGAME) {
       if (frameRef.current) {
         cancelAnimationFrame(frameRef.current);
         frameRef.current = null;
@@ -104,7 +70,6 @@ const Scale = () => {
     }
 
     const animate = () => {
-      // Обновляем скорость и высоту
       velocityRef.current += directionRef.current * 0.1;
 
       let next = currentHeightRef.current + velocityRef.current;
@@ -126,7 +91,6 @@ const Scale = () => {
 
       currentHeightRef.current = next;
 
-      // Прямая манипуляция DOM
       if (energyRef.current) {
         energyRef.current.style.height = `${next}px`;
         const afterBottom = -1 + next;
@@ -146,49 +110,10 @@ const Scale = () => {
     };
   }, [hammerState, maxHeight]);
 
-  // Логика для punched (с задержкой 1 секунда)
-  useEffect(() => {
-    if (hammerState !== 'punched') {
-      isHandledRef.current = false;
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current);
-        timeoutRef.current = null;
-      }
-      return;
-    }
-    
-    if (isHandledRef.current) return;
-    isHandledRef.current = true;
-    
-    timeoutRef.current = setTimeout(() => {
-      const percent = Math.round((currentHeightRef.current / maxHeight) * 100);
-      dispatch(setScaleValue(percent));
-      dispatch(fillLevelsByValue(percent));
-    }, 1000);
-    
-    return () => {
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current);
-        timeoutRef.current = null;
-      }
-    };
-  }, [hammerState, dispatch, maxHeight]);
-
-  return (
-    <div className={styles.scale}>
-      <div className={styles['scale-lines']} />
-
-      <div
-        ref={energyRef}
-        className={styles['scale-energy']}
-        style={{
-          background: 'linear-gradient(180deg, #00d355 0%, #88ff88 100%)',
-        }}
-      />
-
-      <div className={styles['scale-white-half']} />
-    </div>
-  );
+  return {
+    energyRef,
+    currentHeightRef,
+    smoothReset,
+    isResettingRef,
+  };
 };
-
-export default Scale;

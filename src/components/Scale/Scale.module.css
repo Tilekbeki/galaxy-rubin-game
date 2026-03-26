@@ -2,11 +2,12 @@
   position: relative;
   width: 40px;
   height: 147px;
-  background: url("../../assets/scale.png") center/cover no-repeat;
+  background: url('../../assets/scale.png') center/cover no-repeat;
   margin-right: 27px;
   display: flex;
   align-items: flex-end;
   justify-content: center;
+  overflow: hidden;
 }
 
 /* Энергия шкалы (динамическая часть) */
@@ -18,14 +19,14 @@
   transform: translateX(-50%);
   background-color: #00d355;
   border-radius: 3px;
-  transition: height 0.05s linear;
+  transition: height 0.1s linear;
   z-index: 1;
   height: 0px; /* начальная высота */
 }
 
 /* Белая полоска после энергии */
 .scale-energy::after {
-  content: "";
+  content: '';
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
@@ -33,7 +34,23 @@
   height: 3px;
   background-color: #fff;
   border-radius: 2px;
+
+  transition: all 0.1s linear;
   bottom: var(--after-bottom, -1px); /* теперь поднимается вместе с высотой */
+}
+
+.scale-energy::before {
+  content: '';
+  position: absolute;
+  bottom: 4px;
+  width: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #00d355;
+  border-radius: 3px;
+  transition: height 0.05s linear;
+  z-index: 1;
+  bottom: var(--before-bottom, -1px); /* теперь поднимается вместе с высотой */
 }
 
 /* Белая половина (декоративный элемент) */
@@ -52,7 +69,7 @@
 /* Линии шкалы (сетка) */
 .scale-lines {
   position: absolute;
-  background: url("../../assets/scale-1.png") center/cover no-repeat;
+  background: url('../../assets/scale-1.png') center/cover no-repeat;
   width: 100%;
   height: 100%;
   z-index: 3;

@@ -1,3 +1,3 @@
-import ButtonStart from "./ButtonStart";
+import ButtonStart from './ButtonStart';
 
 export default ButtonStart;

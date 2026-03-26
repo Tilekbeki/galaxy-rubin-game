@@ -1,3 +1,3 @@
-import GameScene from "./GameScene";
+import GameScene from './GameScene';
 
 export default GameScene;

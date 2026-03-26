@@ -6,5 +6,5 @@
   width: 124px;
   z-index: 1;
   height: 68px;
-  background: url("../../assets/button.png") center/cover no-repeat;
+  background: url('../../assets/button.png') center/cover no-repeat;
 }

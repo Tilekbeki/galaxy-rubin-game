@@ -1,3 +1,3 @@
-import MeasureBar from "./MeasureBar";
+import MeasureBar from './MeasureBar';
 
 export default MeasureBar;
