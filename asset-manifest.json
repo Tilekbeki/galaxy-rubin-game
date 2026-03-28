@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/galaxy-rubin-game/static/css/main.5dc76cf9.css",
-    "main.js": "/galaxy-rubin-game/static/js/main.175228bc.js",
+    "main.js": "/galaxy-rubin-game/static/js/main.f4d188c7.js",
     "static/media/bg_top.png": "/galaxy-rubin-game/static/media/bg_top.082803adc39ea8173cdf.png",
     "static/media/Roboto-Bold.ttf": "/galaxy-rubin-game/static/media/Roboto-Bold.acc817399c005142cbfa.ttf",
     "static/media/measure_main.png": "/galaxy-rubin-game/static/media/measure_main.eaa374666b0485a49349.png",
@@ -11,10 +11,10 @@
     "static/media/layer_glow.png": "/galaxy-rubin-game/static/media/layer_glow.08d02123dba070ddf711.png",
     "index.html": "/galaxy-rubin-game/index.html",
     "main.5dc76cf9.css.map": "/galaxy-rubin-game/static/css/main.5dc76cf9.css.map",
-    "main.175228bc.js.map": "/galaxy-rubin-game/static/js/main.175228bc.js.map"
+    "main.f4d188c7.js.map": "/galaxy-rubin-game/static/js/main.f4d188c7.js.map"
   },
   "entrypoints": [
     "static/css/main.5dc76cf9.css",
-    "static/js/main.175228bc.js"
+    "static/js/main.f4d188c7.js"
   ]
 }
