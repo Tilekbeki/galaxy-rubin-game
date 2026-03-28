@@ -8,7 +8,7 @@ const PlayButton = ({ text, onClick }) => {
   const gameStatus = useSelector((state) => state.game.gameStatus);
 
   return (
-    <button
+    <button type="button"
       className={`${styles.button} ${gameStatus === GAME_STATUS.INGAME ? styles['button--active'] : null}`}
       onClick={onClick}
     >
