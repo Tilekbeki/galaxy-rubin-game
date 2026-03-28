@@ -10,16 +10,21 @@ export const useGameLogic = () => {
   const dispatch = useDispatch();
 
   const currentValue = useSelector((state) => state.scale.currentValue);
+  const filledLevels = useSelector((state) => state.measure.filledLevels);
+  const totalLevels = useSelector((state) => state.measure.totalLevels);
+
   const { gameStatus, hammerState } = useSelector((state) => state.game);
 
-  // 👉 ЕДИНАЯ логика удара
   useEffect(() => {
     if (hammerState !== HAMMER_STATE.PUNCHED) return;
 
     dispatch(fillLevelsByValue(currentValue));
 
     const timer = setTimeout(() => {
-      dispatch(currentValue >= 95 ? winGame() : failGame());
+      const allLevelsFilled = filledLevels === totalLevels;
+      const isWin = currentValue > 95 && allLevelsFilled;
+
+      dispatch(isWin ? winGame() : failGame());
     }, 1000);
 
     return () => clearTimeout(timer);
@@ -29,7 +34,7 @@ export const useGameLogic = () => {
     dispatch(setScaleValue(percent));
     dispatch(fillLevelsByValue(percent));
   };
-  // 👉 обработчик кнопки
+
   const handleAction = () => {
     switch (gameStatus) {
       case GAME_STATUS.BEFORE:
