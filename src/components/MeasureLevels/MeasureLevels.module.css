@@ -10,7 +10,6 @@
   width: 74px;
 }
 
-/* Контейнер для каждого уровня */
 .level-item {
   position: relative;
   width: 74px;
@@ -18,7 +17,6 @@
   transition: all 0.3s ease;
 }
 
-/* Базовые стили для прямоугольников */
 .level {
   position: relative;
   width: 100%;
@@ -26,7 +24,6 @@
   transition: background 0.3s ease;
 }
 
-/* Индивидуальная высота для каждого уровня */
 .level-item--1 {
   height: 46px;
 }
@@ -55,7 +52,6 @@
   height: 16px;
 }
 
-/* Псевдоэлементы для рамки */
 .level::before,
 .level::after {
   content: '';
@@ -66,13 +62,11 @@
   pointer-events: none;
 }
 
-/* Верхний левый угол */
 .level::before {
   top: 0;
   left: 0;
 }
 
-/* Нижний правый угол */
 .level::after {
   width: 3px;
   right: 2px;
@@ -81,87 +75,69 @@
   height: calc(100% - 4px);
 }
 
-/* ===== Обычные состояния (от темного к светлому) ===== */
-/* Самый нижний (1-й) - самый темный */
 .level--1 {
   background: #254b9d;
 }
 
-/* 2-й */
 .level--2 {
   background: #3a5ca5;
 }
 
-/* 3-й */
 .level--3 {
   background: #5878be;
 }
 
-/* 4-й */
 .level--4 {
   background: #7593d6;
 }
 
-/* 5-й */
 .level--5 {
   background: #94aadc;
 }
 
-/* 6-й */
 .level--6 {
   background: #b7c8ed;
 }
 
-/* Самый верхний (7-й) - самый светлый */
 .level--7 {
   background: #d1defb;
   border: unset;
   border-radius: 4px 4px 0 0;
 }
 
-/* ===== Состояния при ударе (заполнение) ===== */
-/* Нижний - зеленый */
 .level--1.hit {
   background: #00b047;
 }
 
-/* 2-й - зеленый светлее */
 .level--2.hit {
   background: #00d355;
 }
 
-/* 3-й - салатовый */
 .level--3.hit {
   background: #91e508;
 }
 
-/* 4-й - желтый */
 .level--4.hit {
   background: #ffdf35;
 }
 
-/* 5-й - оранжевый */
 .level--5.hit {
   background: #ffae4e;
 }
 
-/* 6-й - светло-красный */
 .level--6.hit {
   background: #ff784e;
 }
 
-/* Верхний - красный */
 .level--7.hit {
   background: #f65a5a;
 }
 
-/* Анимация заполнения снизу-вверх */
 .level {
   position: relative;
   overflow: hidden;
 }
 
-/* Псевдоэлемент для анимации заполнения */
 .level::before {
   content: '';
   position: absolute;
@@ -172,7 +148,6 @@
   z-index: 1;
 }
 
-/* Убедимся, что псевдоэлементы рамки остаются поверх анимации */
 .level::after,
 .level .level__corner {
   z-index: 2;

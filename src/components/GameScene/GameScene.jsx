@@ -6,25 +6,26 @@ import Scale from '../Scale';
 import MeasureBar from '../MeasureBar';
 import PushButton from '../PushButton';
 import Hammer from '../Hammer';
+import { GAME_STATUS, ROBOT_STATE } from '../../constants/gameStatus';
 
 import styles from './GameScene.module.css';
 
-const GameScene = ({ gameStatus, robotState, buttonText, onAction }) => {
-  const isHidden = robotState === 'punched';
+const GameScene = ({ gameStatus, robotState, buttonText, onAction, onPunch }) => {
+  const isHidden = robotState === ROBOT_STATE.PUNCHED;
 
   return (
     <div className={styles.container}>
-      <MeasureBar isWin={gameStatus === 'win'} />
-      <PushButton onPunch={onAction} />
+      <MeasureBar isWin={gameStatus === GAME_STATUS.WIN} />
+      <PushButton  />
       <Hammer />
 
       <div className={styles.controllers}>
-        <Scale />
+        <Scale onPunch={onPunch} />
 
         <div
           className={`${styles['interactive-block']}
             ${isHidden ? styles['interactive-block-hidden'] : ''}
-            ${gameStatus === 'win' ? styles['interactive-block-win'] : ''}
+            ${gameStatus === GAME_STATUS.WIN ? styles['interactive-block-win'] : ''}
           `}
         >
           <TextPreview />

@@ -1,4 +1,5 @@
 import { useSelector } from 'react-redux';
+
 import styles from './TextPreview.module.css';
 
 const TextPreview = () => {

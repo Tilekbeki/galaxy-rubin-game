@@ -1,7 +1,10 @@
 import { useSelector } from 'react-redux';
-import styles from './MeasureBar.module.css';
+
+
 import MeasureLevels from '../MeasureLevels';
 import Rubin from '../Rubin';
+
+import styles from './MeasureBar.module.css';
 
 const MeasureBar = ({ isWin = false }) => {
   const levels = useSelector((state) => state.measure.filledLevels);

@@ -35,17 +35,8 @@ const measureSlice = createSlice({
       state.levels = state.levels.map((level) => ({ ...level, isHit: false }));
       state.filledLevels = 0;
     },
-    setLevelHit: (state, action) => {
-      const { levelId, isHit } = action.payload;
-      const level = state.levels.find((l) => l.id === levelId);
-      if (level) {
-        level.isHit = isHit;
-      }
-
-      state.filledLevels = state.levels.filter((l) => l.isHit).length;
-    },
   },
 });
 
-export const { fillLevelsByValue, resetLevels, setLevelHit } = measureSlice.actions;
+export const { fillLevelsByValue, resetLevels } = measureSlice.actions;
 export default measureSlice.reducer;

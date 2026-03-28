@@ -1,15 +1,16 @@
-import { useState, useEffect, useRef } from 'react';
-import styles from './PushButton.module.css';
-import buttonActive from '../../assets/button_active.png';
-import buttonNormal from '../../assets/button.png';
+import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 
-const PushButton = ({ onPunch, disabled = false }) => {
+import buttonActive from '../../assets/button_active.png';
+import buttonNormal from '../../assets/button.png';
+import { HAMMER_STATE } from '../../constants/gameStatus';
+
+import styles from './PushButton.module.css';
+
+const PushButton = () => {
   const [isPressed, setIsPressed] = useState(false);
   const [imagesLoaded, setImagesLoaded] = useState(false);
-  const harmerState = useSelector((state) => state.game.hammerState);
-
-  const isPunchExecutedRef = useRef(false);
+  const hammerState  = useSelector((state) => state.game.hammerState);
 
   useEffect(() => {
     const preloadImages = async () => {
@@ -30,7 +31,7 @@ const PushButton = ({ onPunch, disabled = false }) => {
   }, []);
 
   useEffect(() => {
-    if (harmerState === 'punched') {
+    if (hammerState === HAMMER_STATE.PUNCHED) {
       const timeoutId = setTimeout(() => {
         setIsPressed(true);
       }, 1000);
@@ -38,11 +39,10 @@ const PushButton = ({ onPunch, disabled = false }) => {
       return () => clearTimeout(timeoutId);
     }
 
-    if (harmerState === 'initial') {
+    if (hammerState === HAMMER_STATE.INITIAL) {
       setIsPressed(false);
-      isPunchExecutedRef.current = false;
     }
-  }, [harmerState]);
+  }, [hammerState]);
 
   if (!imagesLoaded) {
     return <div className={styles['push-button']} />;
@@ -50,15 +50,15 @@ const PushButton = ({ onPunch, disabled = false }) => {
 
   return (
     <div
-      className={`${styles['push-button']} ${disabled ? styles['push-button--disabled'] : ''}`}
+      className={styles['push-button']}
       style={{
         backgroundImage: `url(${isPressed ? buttonActive : buttonNormal})`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat',
-        opacity: disabled ? 0.5 : 1,
-        cursor: disabled ? 'not-allowed' : 'pointer',
-        pointerEvents: disabled ? 'none' : 'auto',
+        opacity: 1,
+        cursor: 'pointer',
+        pointerEvents:  'auto',
       }}
     />
   );

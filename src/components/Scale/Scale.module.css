@@ -10,7 +10,6 @@
   overflow: hidden;
 }
 
-/* Энергия шкалы (динамическая часть) */
 .scale-energy {
   position: absolute;
   bottom: 4px;
@@ -21,10 +20,9 @@
   border-radius: 3px;
   transition: height 0.1s linear;
   z-index: 1;
-  height: 0px; /* начальная высота */
+  height: 0px;
 }
 
-/* Белая полоска после энергии */
 .scale-energy::after {
   content: '';
   position: absolute;
@@ -36,24 +34,9 @@
   border-radius: 2px;
 
   transition: all 0.1s linear;
-  bottom: var(--after-bottom, -1px); /* теперь поднимается вместе с высотой */
+  bottom: var(--after-bottom, -1px);
 }
 
-.scale-energy::before {
-  content: '';
-  position: absolute;
-  bottom: 4px;
-  width: 32px;
-  left: 50%;
-  transform: translateX(-50%);
-  background-color: #00d355;
-  border-radius: 3px;
-  transition: height 0.05s linear;
-  z-index: 1;
-  bottom: var(--before-bottom, -1px); /* теперь поднимается вместе с высотой */
-}
-
-/* Белая половина (декоративный элемент) */
 .scale-white-half {
   top: 4px;
   position: absolute;
@@ -66,7 +49,6 @@
   pointer-events: none;
 }
 
-/* Линии шкалы (сетка) */
 .scale-lines {
   position: absolute;
   background: url('../../assets/scale-1.png') center/cover no-repeat;
@@ -74,27 +56,4 @@
   height: 100%;
   z-index: 3;
   pointer-events: none;
-}
-
-/* Градиентная заливка для энергии (опционально) */
-.scale-energy--gradient {
-  background: linear-gradient(180deg, #00d355 0%, #4caf50 50%, #8bc34a 100%);
-}
-
-/* Анимация пульсации при заполнении */
-@keyframes energyPulse {
-  0% {
-    opacity: 0.8;
-  }
-  50% {
-    opacity: 1;
-    box-shadow: 0 0 4px rgba(0, 211, 85, 0.5);
-  }
-  100% {
-    opacity: 0.8;
-  }
-}
-
-.scale-energy--pulse {
-  animation: energyPulse 0.3s ease-in-out;
 }

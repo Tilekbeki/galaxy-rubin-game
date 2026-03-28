@@ -1,18 +1,21 @@
-import styles from './Robot.module.css';
 import { useSelector } from 'react-redux';
+
+import { ROBOT_STATE } from '../../constants/gameStatus';
+
+import styles from './Robot.module.css';
 
 const Robot = () => {
   const robotState = useSelector((state) => state.game.robotState);
 
   const getRobotClass = () => {
     switch (robotState) {
-      case 'before':
+      case ROBOT_STATE.BEFORE:
         return styles['robot-before'];
-      case 'ingame':
+      case ROBOT_STATE.INGAME:
         return styles['robot-ingame'];
-      case 'punched':
+      case ROBOT_STATE.PUNCHED:
         return styles['robot-punched'];
-      case 'win':
+      case ROBOT_STATE.WIN:
         return styles['robot-win'];
       default:
         return styles['robot-before'];

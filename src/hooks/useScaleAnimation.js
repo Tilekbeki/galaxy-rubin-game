@@ -1,71 +1,82 @@
-import { useRef, useEffect } from 'react';
+// hooks/useScaleAnimation.js
 
-import { HAMMER_STATE } from '../constants/gameStatus';
+import { useEffect, useRef } from 'react';
+import { useSelector } from 'react-redux';
 
-export const useScaleAnimation = (hammerState, maxHeight = 139) => {
+import { GAME_STATUS, HAMMER_STATE } from '../constants/gameStatus';
+
+export const useScaleAnimation = ({ onPunch }) => {
+  const maxHeight = 139;
+
+  const gameStatus = useSelector((state) => state.game.gameStatus);
+  const hammerState = useSelector((state) => state.game.hammerState);
+
   const energyRef = useRef(null);
   const directionRef = useRef(1);
   const frameRef = useRef(null);
+  const resetFrameRef = useRef(null);
   const velocityRef = useRef(1.5);
   const currentHeightRef = useRef(0);
+  const isHandledRef = useRef(false);
+  const timeoutRef = useRef(null);
   const isResettingRef = useRef(false);
-  const resetFrameRef = useRef(null);
 
-  // Функция для плавного сброса
   const smoothReset = () => {
     if (resetFrameRef.current) {
       cancelAnimationFrame(resetFrameRef.current);
     }
 
     isResettingRef.current = true;
+
     const startHeight = currentHeightRef.current;
     const startTime = performance.now();
     const duration = 500;
 
     const animateReset = (now) => {
-      const elapsed = now - startTime;
-      const progress = Math.min(1, elapsed / duration);
-      const easeOutCubic = 1 - (1 - progress) ** 3;
-      const currentHeight = startHeight * (1 - easeOutCubic);
+      const progress = Math.min(1, (now - startTime) / duration);
+      const ease = 1 - (1 - progress) ** 3;
 
-      currentHeightRef.current = currentHeight;
+      const height = startHeight * (1 - ease);
+      currentHeightRef.current = height;
 
       if (energyRef.current) {
-        energyRef.current.style.height = `${currentHeight}px`;
-        const afterBottom = -1 + currentHeight;
-        energyRef.current.style.setProperty('--after-bottom', `${afterBottom}px`);
+        energyRef.current.style.height = `${height}px`;
+        energyRef.current.style.setProperty('--after-bottom', `${-1 + height}px`);
       }
 
       if (progress < 1) {
         resetFrameRef.current = requestAnimationFrame(animateReset);
       } else {
         currentHeightRef.current = 0;
-        if (energyRef.current) {
-          energyRef.current.style.height = `0px`;
-          energyRef.current.style.setProperty('--after-bottom', `-1px`);
-        }
         isResettingRef.current = false;
-        resetFrameRef.current = null;
       }
     };
 
     resetFrameRef.current = requestAnimationFrame(animateReset);
   };
 
-  // Анимация через requestAnimationFrame
+  useEffect(() => {
+    if (gameStatus === GAME_STATUS.BEFORE) {
+      smoothReset();
+
+      directionRef.current = 1;
+      velocityRef.current = 1.5;
+      isHandledRef.current = false;
+
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+    }
+  }, [gameStatus]);
+
   useEffect(() => {
     if (hammerState !== HAMMER_STATE.INGAME) {
-      if (frameRef.current) {
-        cancelAnimationFrame(frameRef.current);
-        frameRef.current = null;
-      }
+      cancelAnimationFrame(frameRef.current);
       return;
     }
 
-    // Если идет сброс, прерываем его
-    if (isResettingRef.current && resetFrameRef.current) {
+    if (isResettingRef.current) {
       cancelAnimationFrame(resetFrameRef.current);
-      resetFrameRef.current = null;
       isResettingRef.current = false;
     }
 
@@ -93,8 +104,7 @@ export const useScaleAnimation = (hammerState, maxHeight = 139) => {
 
       if (energyRef.current) {
         energyRef.current.style.height = `${next}px`;
-        const afterBottom = -1 + next;
-        energyRef.current.style.setProperty('--after-bottom', `${afterBottom}px`);
+        energyRef.current.style.setProperty('--after-bottom', `${-1 + next}px`);
       }
 
       frameRef.current = requestAnimationFrame(animate);
@@ -102,18 +112,29 @@ export const useScaleAnimation = (hammerState, maxHeight = 139) => {
 
     frameRef.current = requestAnimationFrame(animate);
 
-    return () => {
-      if (frameRef.current) {
-        cancelAnimationFrame(frameRef.current);
-        frameRef.current = null;
-      }
-    };
-  }, [hammerState, maxHeight]);
+    return () => cancelAnimationFrame(frameRef.current);
+  }, [hammerState]);
+
+  useEffect(() => {
+    if (hammerState !== HAMMER_STATE.PUNCHED) {
+      isHandledRef.current = false;
+      clearTimeout(timeoutRef.current);
+      return;
+    }
+
+    if (isHandledRef.current) return;
+    isHandledRef.current = true;
+
+    timeoutRef.current = setTimeout(() => {
+      const percent = Math.round((currentHeightRef.current / maxHeight) * 100);
+
+      onPunch?.(percent);
+    }, 1000);
+
+    return () => clearTimeout(timeoutRef.current);
+  }, [hammerState, onPunch]);
 
   return {
     energyRef,
-    currentHeightRef,
-    smoothReset,
-    isResettingRef,
   };
 };

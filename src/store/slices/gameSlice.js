@@ -1,9 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+import { GAME_STATUS, HAMMER_STATE, ROBOT_STATE } from '../../constants/gameStatus';
+
 const initialState = {
-  gameStatus: 'before',
-  robotState: 'before',
-  hammerState: 'initial',
+  gameStatus: GAME_STATUS.BEFORE,
+  robotState: ROBOT_STATE.BEFORE,
+  hammerState: HAMMER_STATE.INITIAL,
 };
 
 const gameSlice = createSlice({
@@ -11,25 +13,25 @@ const gameSlice = createSlice({
   initialState,
   reducers: {
     startGame: (state) => {
-      state.gameStatus = 'ingame';
-      state.robotState = 'ingame';
-      state.hammerState = 'ingame';
+      state.gameStatus = GAME_STATUS.INGAME;
+      state.robotState = ROBOT_STATE.INGAME;
+      state.hammerState = HAMMER_STATE.INGAME;
     },
     punch: (state) => {
-      if (state.gameStatus === 'ingame') {
-        state.hammerState = 'punched';
-        state.robotState = 'punched';
+      if (state.gameStatus === GAME_STATUS.INGAME) {
+        state.hammerState = HAMMER_STATE.PUNCHED;
+        state.robotState = ROBOT_STATE.PUNCHED;
       }
     },
     winGame: (state) => {
-      state.gameStatus = 'win';
-      state.robotState = 'win';
+      state.gameStatus = GAME_STATUS.WIN;
+      state.robotState = ROBOT_STATE.WIN;
     },
     failGame: (state) => {
-      state.gameStatus = 'fail';
-      state.robotState = 'before';
+      state.gameStatus = GAME_STATUS.FAIL;
+      state.robotState = ROBOT_STATE.BEFORE;
     },
-    resetGame: (state) => initialState,
+    resetGame: () => initialState,
     setRobotState: (state, action) => {
       state.robotState = action.payload;
     },

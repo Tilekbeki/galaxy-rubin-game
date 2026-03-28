@@ -1,17 +1,18 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { GAME_STATUS, HAMMER_STATE } from '../constants/gameStatus';
 import { startGame, punch, winGame, failGame, resetGame } from '../store/slices/gameSlice';
-import { resetScale } from '../store/slices/scaleSlice';
+import { resetScale, setScaleValue } from '../store/slices/scaleSlice';
 import { fillLevelsByValue, resetLevels } from '../store/slices/measureSlice';
+import { GAME_STATUS, HAMMER_STATE } from '../constants/gameStatus';
 
 export const useGameLogic = () => {
   const dispatch = useDispatch();
-  const currentValue = useSelector((state) => state.scale.currentValue);
-  const { gameStatus, robotState, hammerState } = useSelector((state) => state.game);
 
-  // Обработка удара
+  const currentValue = useSelector((state) => state.scale.currentValue);
+  const { gameStatus, hammerState } = useSelector((state) => state.game);
+
+  // 👉 ЕДИНАЯ логика удара
   useEffect(() => {
     if (hammerState !== HAMMER_STATE.PUNCHED) return;
 
@@ -24,7 +25,11 @@ export const useGameLogic = () => {
     return () => clearTimeout(timer);
   }, [hammerState, currentValue, dispatch]);
 
-  // Обработка действий пользователя
+  const handlePunch = (percent) => {
+    dispatch(setScaleValue(percent));
+    dispatch(fillLevelsByValue(percent));
+  };
+  // 👉 обработчик кнопки
   const handleAction = () => {
     switch (gameStatus) {
       case GAME_STATUS.BEFORE:
@@ -58,9 +63,9 @@ export const useGameLogic = () => {
 
   return {
     gameStatus,
-    robotState,
     hammerState,
     buttonText: buttonTextMap[gameStatus],
-    onAction: handleAction,
+    handlePunch,
+    handleAction,
   };
 };

@@ -15,7 +15,6 @@
   z-index: 2;
 }
 
-/* Общие стили для слоев свечения */
 .glowLayer1,
 .glowLayer2 {
   position: absolute;
@@ -31,7 +30,6 @@
   background-image: url('../../assets/layer_glow.png');
 }
 
-/* Состояние победы */
 .prize.win .glowLayer2 {
   opacity: 1;
 }
@@ -39,15 +37,6 @@
 .prize.win .glowLayer2 {
   animation: rotateCounterClockwise 3s linear infinite;
   z-index: 2;
-}
-
-@keyframes rotateClockwise {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
 }
 
 @keyframes rotateCounterClockwise {
