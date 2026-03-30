@@ -17,7 +17,7 @@ export const useGameLogic = () => {
 
   useEffect(() => {
     if (hammerState !== HAMMER_STATE.PUNCHED) return;
-
+    dispatch(setScaleValue(currentValue));
     dispatch(fillLevelsByValue(currentValue));
 
     const timer = setTimeout(() => {
@@ -25,7 +25,7 @@ export const useGameLogic = () => {
       const isWin = allLevelsFilled;
 
       dispatch(isWin ? winGame() : failGame());
-    }, 1000);
+    }, 600);
 
     return () => clearTimeout(timer);
   }, [hammerState, currentValue, dispatch]);

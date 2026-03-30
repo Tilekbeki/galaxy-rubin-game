@@ -6,16 +6,22 @@ import Rubin from '../Rubin';
 
 import styles from './MeasureBar.module.css';
 
-const MeasureBar = ({ isWin = false }) => {
-  const levels = useSelector((state) => state.measure.filledLevels);
+const MeasureBar = () => {
+  const filledLevels = useSelector((state) => state.measure.filledLevels);
+  const totalLevels = useSelector((state) => state.measure.totalLevels);
+
+  const isWinLocal = filledLevels === totalLevels;
 
   return (
     <div className={styles['measure-bar']}>
       <div
-        className={`${styles['measure-bar-header']} ${isWin ? styles['measure-bar-header--win'] : ''}`}
+        className={`${styles['measure-bar-header']} ${
+          isWinLocal ? styles['measure-bar-header--win'] : ''
+        }`}
       >
-        <Rubin isWin={levels === 7} />
+        <Rubin isWin={isWinLocal} />
       </div>
+
       <MeasureLevels />
     </div>
   );

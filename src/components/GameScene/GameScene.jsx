@@ -15,7 +15,7 @@ const GameScene = ({ gameStatus, robotState, buttonText, onAction, onPunch }) =>
 
   return (
     <div className={styles.container}>
-      <MeasureBar isWin={gameStatus === GAME_STATUS.WIN} />
+      <MeasureBar/>
       <PushButton  />
       <Hammer />
 

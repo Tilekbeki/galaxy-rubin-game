@@ -129,7 +129,7 @@ export const useScaleAnimation = ({ onPunch }) => {
       const percent = Math.round((currentHeightRef.current / maxHeight) * 100);
 
       onPunch?.(percent);
-    }, 1000);
+    }, 500);
 
     return () => clearTimeout(timeoutRef.current);
   }, [hammerState, onPunch]);
