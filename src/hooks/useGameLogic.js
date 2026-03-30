@@ -22,7 +22,7 @@ export const useGameLogic = () => {
 
     const timer = setTimeout(() => {
       const allLevelsFilled = filledLevels === totalLevels;
-      const isWin = currentValue > 95 && allLevelsFilled;
+      const isWin = allLevelsFilled;
 
       dispatch(isWin ? winGame() : failGame());
     }, 1000);
