@@ -25,7 +25,7 @@ export const useGameLogic = () => {
       const isWin = allLevelsFilled;
 
       dispatch(isWin ? winGame() : failGame());
-    }, 600);
+    }, 1000);
 
     return () => clearTimeout(timer);
   }, [hammerState, currentValue, dispatch]);
